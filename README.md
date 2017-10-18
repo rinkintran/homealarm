@@ -21,4 +21,3 @@ python-picamera
 Lincoln Tran  
 lincoln.tran@gmail.com  
 ltran28@calpoly.edu  
-(408) 940-5462  
