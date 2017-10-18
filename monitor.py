@@ -38,7 +38,6 @@ for f in camera.capture_continuous(rawCapture, 'bgr', use_video_port=True):
       cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
    
    cv2.imshow("Feed", frame)
-   # cv2.imshow("Difference", frameDelta)
    if cv2.waitKey(1) & 0xFF == ord('q'):
       break
    rawCapture.seek(0)
