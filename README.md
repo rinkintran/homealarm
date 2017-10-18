@@ -11,7 +11,7 @@ This code runs on the Raspberry Pi to recognize people close by. It will pass th
    2. Install all necessary libraries
 * Configuration
 
-* Dependencies
+* Dependencies  
 OpenCV compiled and installed in the home directory  
 tensorflow-on-raspberry-pi  
 python-picamera  
