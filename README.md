@@ -2,7 +2,7 @@
 
 ### What is this repository for? ###
 
-This code runs on the Raspberry Pi to recognize people close by. It will pass the image through a trained neural net and verify the face. If not recognized, it will alert the owner of the device. This repository is built as a computer engineering senior project.
+This code is meant to run on the Raspberry Pi to recognize people who are close by. It detects movement, captures the picture, passes it through a neural net, and verifies the face. If not recognized, it will alert the owner of the device via email. This repository is built as a computer engineering senior project.
 
 ### How do I get set up? ###
 
@@ -16,7 +16,6 @@ OpenCV compiled and installed in the home directory
 tensorflow-on-raspberry-pi  
 python-picamera  
 
-### Who do I talk to? ###
 
 Lincoln Tran  
 lincoln.tran@gmail.com  
