@@ -1,0 +1,2 @@
+It takes an average of 0.175 seconds to look for faces in a picture
+It takes an average of 0.027 seconds to detect differences in a picture

@@ -1,9 +1,10 @@
 import cv2
 import picamera
 import picamera.array
+import time
 
 print("Initializing camera")
-camera = picamera.PiCamera()
+camera = picamera.PiCamera(resolution = "2592x1944")
 rawCapture = picamera.array.PiRGBArray(camera)
 
 avg = None
@@ -22,24 +23,32 @@ for f in camera.capture_continuous(rawCapture, 'bgr', use_video_port=True):
       avg = gray.copy().astype("float")
       rawCapture.truncate(0)
       continue
-      
+   
+   start = time.time()   
    cv2.accumulateWeighted(gray, avg, 0.5)
    frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(avg))
-   
+
    thresh = cv2.threshold(frameDelta, 5, 255, cv2.THRESH_BINARY)[1]
    thresh = cv2.dilate(thresh, None, iterations=2)
+
    image, cnts, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-   
-   for c in cnts:
-      if cv2.contourArea(c) < 5000:
-         continue
+   end = time.time()
+
+   print(len(cnts))
+   print(end - start, "seconds")
+
+   # if len(cnts) > 15:
+   #    print("Motion Detected")
+   # for c in cnts:
+   #    if cv2.contourArea(c) > 10000:
+   #       print("Motion Detected")
          
-      (x, y, w, h) = cv2.boundingRect(c)
-      cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+   #    (x, y, w, h) = cv2.boundingRect(c)
+   #    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
    
-   cv2.imshow("Feed", frame)
-   if cv2.waitKey(1) & 0xFF == ord('q'):
-      break
+   # cv2.imshow("Feed", frame)
+   # if cv2.waitKey(1) & 0xFF == ord('q'):
+   #    break
    rawCapture.seek(0)
    rawCapture.truncate()
 
