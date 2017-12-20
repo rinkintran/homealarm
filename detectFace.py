@@ -4,6 +4,7 @@ import picamera.array
 import datetime
 import time
 import numpy as np
+from recognizeFace import recognize
 
 face_cascade = cv2.CascadeClassifier('/home/lincolntran/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
 eyes_cascade = cv2.CascadeClassifier('/home/lincolntran/opencv/data/haarcascades/haarcascade_eye.xml')
@@ -11,6 +12,7 @@ eyes_cascade = cv2.CascadeClassifier('/home/lincolntran/opencv/data/haarcascades
 print("Initializing camera")
 camera = picamera.PiCamera()
 camera.exposure_mode = "sports"
+camera.color_effects = (128,128)
 
 def main():
    avg = None
@@ -66,7 +68,7 @@ def saveFace():
    
    #crop out face
    if len(faces) > 0:
-      imgCrop(frame, faces)
+      imgCrop(gray, faces)
    else:
       print("No faces recognized in still")
    
@@ -81,7 +83,8 @@ def imgCrop(image, cropBox):
       eyes = eyes_cascade.detectMultiScale(croppedFace)
       if len(eyes) > 0:
          print("Found good face with eyes")
-         cv2.imwrite(datetime.datetime.now().strftime("%Y%m%d %I:%M:%S%p") + ".jpg", croppedFace)
+         recognize(image)
+         # cv2.imwrite(datetime.datetime.now().strftime("%Y%m%d %I:%M:%S%p") + ".jpg", croppedFace)
       else:
          print("Couldn't find eyes on the face")
 
