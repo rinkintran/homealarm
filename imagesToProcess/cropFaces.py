@@ -9,7 +9,7 @@ def main(argv):
    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
    #detect face in image (should be only one face)
-   faces = face_cascade.detectMultiScale(gray, 1.3, 5, minSize=(200, 200))
+   faces = face_cascade.detectMultiScale(gray, 1.3, 5, minSize=(100, 100))
 
    #crop out face from image
    imgCrop(argv[1], img, faces)
