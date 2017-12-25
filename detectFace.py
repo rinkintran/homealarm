@@ -3,16 +3,24 @@ import picamera
 import picamera.array
 import datetime
 import time
+import _thread
 import numpy as np
 from recognizeFace import recognize
 
 face_cascade = cv2.CascadeClassifier('/home/lincolntran/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
 eyes_cascade = cv2.CascadeClassifier('/home/lincolntran/opencv/data/haarcascades/haarcascade_eye.xml')
 
+names = ["Hayden", "Lincoln"]
+face_recognizer = cv2.face.LBPHFaceRecognizer_create()
+face_recognizer.read("faceModels.yml")
+face_recognizer.setThreshold(40) #29 seems to work well
+
 print("Initializing camera")
 camera = picamera.PiCamera()
 camera.exposure_mode = "sports"
 camera.color_effects = (128,128)
+
+log = open("log.txt", 'w')
 
 def main():
    avg = None
@@ -37,8 +45,6 @@ def main():
       thresh = cv2.dilate(thresh, None, iterations=2)
 
       image, cnts, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-      # print(len(cnts))
 
       if len(cnts) > 10:
          start = time.time()
@@ -70,11 +76,9 @@ def saveFace():
    if len(faces) > 0:
       imgCrop(gray, faces)
    else:
-      print("No faces recognized in still")
-   
-   # rawCapture.seek(0)
-   # rawCapture.truncate()
-   
+      print("No face detected")
+      log.write(datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S%p") + " Motion detected but no faces found, ignoring\n")
+
    return
 
 def imgCrop(image, cropBox):
@@ -83,10 +87,12 @@ def imgCrop(image, cropBox):
       eyes = eyes_cascade.detectMultiScale(croppedFace)
       if len(eyes) > 0:
          print("Found good face with eyes")
-         recognize(image)
+         _thread.start_new_thread(recognize, (image, names, face_recognizer, log))
          # cv2.imwrite(datetime.datetime.now().strftime("%Y%m%d %I:%M:%S%p") + ".jpg", croppedFace)
       else:
          print("Couldn't find eyes on the face")
+         log.write(datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S%p") + " Low quality face captured, alerting owner anyways\n")
+
 
 if __name__ == "__main__":
     main()

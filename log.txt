@@ -1,0 +1,3 @@
+2017-12-24 02:00:48AM Motion detected but no faces found, ignoring
+2017-12-24 02:00:54AM Detected Lincoln
+2017-12-24 02:00:55AM Motion detected but no faces found, ignoring
