@@ -3,6 +3,8 @@ import picamera
 import picamera.array
 import datetime
 import time
+from webhook import sendImage
+import webhook
 import _thread
 import numpy as np
 from recognizeFace import recognize
@@ -13,7 +15,7 @@ eyes_cascade = cv2.CascadeClassifier('/home/lincolntran/opencv/data/haarcascades
 names = ["Hayden", "Lincoln"]
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 face_recognizer.read("faceModels.yml")
-face_recognizer.setThreshold(40) #29 seems to work well
+face_recognizer.setThreshold(29) #29 seems to work well
 
 print("Initializing camera")
 camera = picamera.PiCamera()
@@ -87,11 +89,13 @@ def imgCrop(image, cropBox):
       eyes = eyes_cascade.detectMultiScale(croppedFace)
       if len(eyes) > 0:
          print("Found good face with eyes")
-         _thread.start_new_thread(recognize, (image, names, face_recognizer, log))
-         # cv2.imwrite(datetime.datetime.now().strftime("%Y%m%d %I:%M:%S%p") + ".jpg", croppedFace)
+         _thread.start_new_thread(recognize, (croppedFace, names, face_recognizer, log))
       else:
          print("Couldn't find eyes on the face")
-         log.write(datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S%p") + " Low quality face captured, alerting owner anyways\n")
+         imgName = datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S%p")
+         log.write(imgName + " Low quality face captured, alerting owner anyways\n")
+         cv2.imwrite(imgName + ".jpg", croppedFace)
+         _thread.start_new_thread(sendImage, ("Detected movement but couldn't identify a face", imgName, croppedFace))
 
 
 if __name__ == "__main__":

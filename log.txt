@@ -1,3 +1,14 @@
-2017-12-24 02:00:48AM Motion detected but no faces found, ignoring
-2017-12-24 02:00:54AM Detected Lincoln
-2017-12-24 02:00:55AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:23AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:24AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:25AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:26AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:35AM Detected Lincoln
+2017-12-27 01:14:36AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:38AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:38AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:40AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:41AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:44AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:45AM Motion detected but no faces found, ignoring
+2017-12-27 01:14:51AM Detected Lincoln
+2017-12-27 01:14:52AM Motion detected but no faces found, ignoring

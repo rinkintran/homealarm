@@ -20,22 +20,21 @@ auth_string = "dXNlcj1saW5jb2xuLnRyYW5AZ21haWwuY29tAWF1dGg9QmVhcmVyIHlhMjkuR2xzd
 recievers = ['lincoln.tran@gmail.com']
 
 def sendImage(messageText, image_name, image_data):
-   image_data = open("./" + image_name + ".jpg", "rb").read()
+   image_data = open("./"+image_name, "rb").read()
 
    message = MIMEMultipart()
    message['Subject'] = "Unknown person in room"
    message['From'] = "lincoln.tran@gmail.com"
    message['To'] = "lincoln.tran@gmail.com"
    image = MIMEImage(image_data, name=image_name)
-   text = MIMEText(messageText, 'plain')
-   message.attach(text)
+   message.preamble = messageText
    message.attach(image)
 
    access_token = RefreshToken(client_id, client_secret, refresh_token)
    auth_string = GenerateOAuth2String(user, access_token['access_token'])
 
    server = smtplib.SMTP('smtp.gmail.com', 587)
-   # server.set_debuglevel(True)
+   server.set_debuglevel(True)
    server.ehlo()
    server.starttls()
    server.docmd('AUTH', 'XOAUTH2 ' + auth_string.decode("utf-8"))
