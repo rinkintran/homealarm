@@ -6,17 +6,12 @@ import base64
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
+import userInfo
 
 # The URL root for accessing Google Accounts.
 GOOGLE_ACCOUNTS_BASE_URL = 'https://accounts.google.com'
 
 user = "lincoln.tran@gmail.com"
-client_id = "156812324924-adfs336vmg5of7395o1rj3ooeb7kk377.apps.googleusercontent.com"
-client_secret = "SnqEaHF5nC85DYE0b4IqN0SG"
-refresh_token = "1/SgxohBC5F7ChqDf35SetMupUAtTFBnfuYrzbyWfi7FwzsZJV0fong__YpUi-C6CS"
-
-auth_string = "dXNlcj1saW5jb2xuLnRyYW5AZ21haWwuY29tAWF1dGg9QmVhcmVyIHlhMjkuR2xzdUJYMHBNTkZnVGE5V0FzS1NjNjA1R0NLUTJwcjFmWm4xa01IWkJwUUYzWGZOR2ZZazNxLXBMSWNwem1EVEZfbFN6Zjk1eHhkTkpTOGdadS1iay1DTWUtVWR5X2J3Skp1YVRzdVVISUxFd2Z6aVc0UnRRX0RPdER1MwEB"
-
 recievers = ['lincoln.tran@gmail.com']
 
 def sendImage(messageText, image_name, image_data):
@@ -31,7 +26,7 @@ def sendImage(messageText, image_name, image_data):
    message.attach(text)
    message.attach(image)
 
-   access_token = RefreshToken(client_id, client_secret, refresh_token)
+   access_token = RefreshToken(userInfo.client_id, userInfo.client_secret, userInfo.refresh_token)
    auth_string = GenerateOAuth2String(user, access_token['access_token'])
 
    server = smtplib.SMTP('smtp.gmail.com', 587)

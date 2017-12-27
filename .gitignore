@@ -109,4 +109,6 @@ venv.bak/
 *.gif
 *.bpg
 
+# Files that contain sensitive data
 *.csv
+userInfo.py
